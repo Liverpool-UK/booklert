@@ -1,5 +1,8 @@
 $color-yellow: yellow;
 
+$icon-font-path: "/fonts/bootstrap/";
+@import "bootstrap/bootstrap";
+
 body {
   background-color: $color-yellow;
 }

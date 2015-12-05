@@ -35,9 +35,9 @@ app.use(sassMiddleware({
 }));
 
 // Serve static files (like stylesheets and images)
-app.use(express.static(
-  path.join(__dirname, 'public')
-));
+app.use(express.static(path.join(__dirname, 'public')));
+// Serve the fonts from deep inside Bootstrap
+app.use('/fonts', express.static(path.join(__dirname, 'node_modules/bootstrap-sass/assets/fonts')));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
