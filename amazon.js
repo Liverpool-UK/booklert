@@ -9,10 +9,12 @@ var async = require('async');
 var AWL = require('amazon-wish-list');
 var isbn = require('node-isbn');
 
-//
+// Create an Amazon Wishlist client.
 var client = new AWL();
 
-// Resolve an ASN to an ISBN (if available).
+/**
+ * Attempt to resolve an ISBN identifier.
+ */
 function resolve(identifier, callback) {
   isbn.resolve(identifier, function(err, book) {
     if (err) {
@@ -27,7 +29,9 @@ function resolve(identifier, callback) {
   });
 }
 
-//
+/**
+ * Get the list of books contained within an Amazon Wishlist.
+ */
 function getBooks(identifier, callback) {
   client.getById(identifier).then(function(wishlist) {
     var ids = wishlist.items.map(function(i) { return i.id; });
@@ -41,14 +45,24 @@ function getBooks(identifier, callback) {
   });
 }
 
-//
-function getIsbns(books) {
-  return books.map(function(b) {
-    return b.industryIdentifiers[0] // FIXME: SEARCH BY ID.
-  });
+/**
+ * Get the best ISBN number available for a book.
+ */
+function getIsbn(book) {
+  var ids = book.industryIdentifiers;
+
+  var isbn13 = ids.find(function (id) { return id.type == 'ISBN_13'; });
+  if (isbn13 !== undefined) {
+    return isbn13.identifier;
+  }
+  var isbn10 = ids.find(function (id) { return id.type == 'ISBN_10'; });
+  if (isbn10 !== undefined) {
+    return isbn10.identifier;
+  }
+  return undefined;
 }
 
 module.exports = {
   getBooks: getBooks,
-  getIsbns: getIsbns
+  getIsbn: getIsbn
 }
