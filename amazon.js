@@ -2,7 +2,8 @@
  * @file amazon.js
  * @author b.lempereur@outlook.com <Brett Lempereur>
  *
- *
+ * Get the contents of Amazon Wishlists and find out which of them are
+ * actualy books.
  */
 
 var async = require('async');
