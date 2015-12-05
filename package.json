@@ -17,6 +17,7 @@
     "node-isbn": "~1.2.0",
     "node-promise": "~0.5.12",
     "node-sass": "^3.4.2",
+    "node-sass-middleware": "^0.9.7",
     "serve-favicon": "~2.3.0"
   }
 }
