@@ -16,7 +16,11 @@ var client = new AWL();
 function resolve(identifier, callback) {
   isbn.resolve(identifier, function(err, book) {
     if (err) {
-      callback(null, null); // FIXME: HANDLE UNEXPECTED ERRORS.
+      if (err.message.startsWith("no books found with isbn:")) {
+        callback(null, null);
+      } else {
+        callback(err, null);
+      }
     } else {
       callback(null, book);
     }
@@ -33,7 +37,7 @@ function getBooks(identifier, callback) {
     });
   })
   .catch(function(reason) {
-    console.log("Could not get wishlist: ", reason); // FIXME: FAIL PROPERLY.
+    callback(new Error("Could not get wishlist: " + reason), null);
   });
 }
 
